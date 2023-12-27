@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --button-color: rgb(230, 230, 230);
+}
+
+.main {
+    width: 500px;
+    height: 600px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 200px auto;
+    background-color: grey;
+}
+
+.screen {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 90%;
+    height: 125px;
+    background-color: var(--button-color);
+}
+
+button {
+    background-color: var(--button-color);
+    border: 0.5px solid;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+button:hover {
+    filter: brightness(112%);
+}
+
+.button-containers {
+    margin: 20px auto;
+    width: 90%;
+    height: 450px;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px auto;
+}
+
+.clear {
+    background-color: rgb(233, 138, 138);
+}
+
+.delete {
+    background-color: rgb(150, 153, 249);
+}
