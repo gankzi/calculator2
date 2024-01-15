@@ -6,32 +6,84 @@ const del = document.querySelector('.delete');
 const input = document.querySelector('.new-input');
 const equation = document.querySelector('.equation');
 
-let firstInput = '';
-let secondInput = '';
+let currentOperation = '';
+let firstNum = '';
+let secondNum = null;
 let operatorSign = null;
+let currentOperator = '';
+let answer;
+
 
 numbers.forEach(number => {
     number.addEventListener('click', event => {
         if (!operatorSign) {
-            firstInput += event.target.value;
-            input.innerHTML = firstInput;
+            firstNum += event.target.value;
+            input.innerHTML = firstNum;
+            currentOperation += firstNum;
         } else if (operatorSign) {
-            secondInput += event.target.value;
-            input.innerHTML = secondInput;
+            if (!secondNum) {
+                secondNum = event.target.value;
+                input.innerHTML = secondNum;
+                currentOperation = currentOperation + ' ' + secondNum;
+            } else {
+                secondNum += event.target.value;
+                input.innerHTML = secondNum;
+                currentOperation += event.target.value;
+            }
         }
     })
 });
 
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
-        operatorSign = event.target.value;
+        
+        if (!secondNum) {
+            operatorSign = event.target.value;
+            currentOperation = firstNum + ' ' + operatorSign;
+            equation.innerHTML = currentOperation;
+            switchOperator(operatorSign);
+        } else {
+            
+            currentOperation = currentOperation + ' ' + event.target.value;
+            equation.innerHTML = currentOperation;
+            
+            operate(Number(firstNum), Number(secondNum), currentOperator);     
+            
+            operatorSign = event.target.value;
+            switchOperator(operatorSign);
+        }
+    
     })
 });
 
 equals.addEventListener('click', () => {
-    operate(Number(firstInput), Number(secondInput), operatorSign);
+
+    if (equation.innerHTML.slice(-1) == '=') {
+        return;
+    } else {
+        equation.innerHTML = firstNum + ' ' + operatorSign + ' ' + secondNum + ' =';
+        
+        operate(Number(firstNum), Number(secondNum), currentOperator);
+    }
+
 });
 
+function switchOperator(op) {
+    switch (op) {
+        case "/":
+            currentOperator = divide;
+            break;
+        case "x":
+            currentOperator = multiply;
+            break;
+        case "-":
+            currentOperator = subtract;
+            break;
+        case "+":
+            currentOperator = add;
+            break;        
+    }
+};
 
 function add(num1, num2) {
     return num1 + num2;
@@ -49,11 +101,12 @@ function divide(num1, num2) {
     return num1/num2;
 };
 
-function operate(num1, num2, operator) {
-    input.innerHTML = window[operator](num1, num2);
+function operate(num1, num2, calculate) {
+    answer = calculate(num1, num2);
+    input.innerHTML = answer;
 
-    firstInput = '';
-    secondInput = '';
+    firstNum = answer;
+    secondNum = null;
     operatorSign = null;
 };
 
