@@ -50,7 +50,23 @@ numbers.forEach(number => {
 operators.forEach(operator => {
     operator.addEventListener('click', event => {
         
-  
+        if (currentOperation.slice(-1) == event.target.value) {
+            return;
+        } else if (!secondNum) {
+            operatorSign = event.target.value;
+            currentOperation = firstNum + ' ' + operatorSign;
+            equation.innerHTML = currentOperation;
+            switchOperator(operatorSign);
+        } else {
+            
+            currentOperation = currentOperation + ' ' + event.target.value;
+            equation.innerHTML = currentOperation;
+            
+            operate(Number(firstNum), Number(secondNum), currentOperator);     
+            
+            operatorSign = event.target.value;
+            switchOperator(operatorSign);
+        }
     
     })
 });
@@ -103,7 +119,7 @@ function divide(num1, num2) {
 };
 
 function handleNumbers() {
-
+    
 }
 
 function operate(num1, num2, calculate) {
