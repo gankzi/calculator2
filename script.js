@@ -39,9 +39,7 @@ del.addEventListener('click', () => {
 document.addEventListener('keydown', () => {
     let keyPressed = event.key;
 
-    console.log(keyPressed);
-
-    if (keyPressed == '0' || keyPressed == '1' || keyPressed == '2' || keyPressed == '3' || keyPressed == '4' || keyPressed == '5' || keyPressed == '6' || keyPressed == '7' || keyPressed == '8' || keyPressed == '9' ||keyPressed == '.') {
+     if (keyPressed == '0' || keyPressed == '1' || keyPressed == '2' || keyPressed == '3' || keyPressed == '4' || keyPressed == '5' || keyPressed == '6' || keyPressed == '7' || keyPressed == '8' || keyPressed == '9' ||keyPressed == '.') {
         handleNumbers(keyPressed);
     };
 
@@ -104,6 +102,9 @@ function divide(num1, num2) {
 };
 
 function handleNumbers(num) {
+    if (currentOperation.slice(-1) == '=') {
+        return;
+    }
 
     if (!operatorSign) {
         if (!decimalPresent) {
@@ -176,7 +177,8 @@ function handleEquals() {
     if (equation.innerHTML.slice(-1) == '=') {
         return;
     } else if (firstNum && secondNum) {
-        equation.innerHTML = firstNum + ' ' + operatorSign + ' ' + secondNum + ' =';
+        currentOperation = currentOperation + ' ' + '=';
+        equation.innerHTML = currentOperation;
         
         operate(Number(firstNum), Number(secondNum), currentOperator);
     } else {
